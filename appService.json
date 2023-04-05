@@ -1,6 +1,6 @@
 {
     "label": "Template2",
-    "name": "temp2",
+    "name": "temp",
     "apiVersion": "v1",
     "internal": true,
     "configurationType": "GLOBAL",
