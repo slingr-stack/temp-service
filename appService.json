@@ -1,0 +1,176 @@
+{
+    "label": "Template2",
+    "name": "temp2",
+    "apiVersion": "v1",
+    "internal": true,
+    "configurationType": "GLOBAL",
+    "deployment": {
+        "type": "java11",
+        "allowMultipleInstances": true,
+        "profiles":[
+            {
+                "name": "default",
+                "label": "Default",
+                "memory": 256,
+                "description": "Default configuration"
+            },
+            {
+                "name": "sample_conf",
+                "label": "Configuration 2",
+                "memory": 384,
+                "description": "Alternative configuration"
+            }
+        ]
+    },
+    "icon48": "https://storage.googleapis.com/static.slingrs.io/platform/endpoints/sample.png",
+    "configurationHelpUrl": "https://slingr-stack.github.io/platform/app_development_model_endpoints.html",
+    "status": "ACTIVE",
+    "stores": [
+        {
+            "name": "test_data_store",
+            "indexes": [
+                {"fieldA": 1},
+                {"fieldB": 1, "fieldC": -1}
+            ]
+        }
+    ],
+    "events": [
+        {
+            "label": "Inbound Event",
+            "name": "inboundEvent",
+            "description": "Event send for the endpoint each time that a POST request to the root path of the web service."
+        },
+        {
+            "label": "Pong",
+            "name": "pong",
+            "description": "Callback event for the Ping function"
+        },
+        {
+            "label": "Route 1 Event",
+            "name": "route1",
+            "description": "It is one of the callback event for routeMessage function"
+        },
+        {
+            "label": "Route 2 Event",
+            "name": "route2",
+            "description": "It is one of the callback event for routeMessage function"
+        },
+        {
+            "label": "Route 3 Event",
+            "name": "route3",
+            "description": "It is one of the callback event for routeMessage function"
+        },
+        {
+            "label": "Route 4 Event",
+            "name": "route4",
+            "description": "It is one of the callback event for routeMessage function"
+        },
+        {
+            "label": "Request to application",
+            "name": "requestInformation",
+            "description": "Used to show how to request information from the endpoint to the application"
+        }
+    ],
+    "functions": [
+        {
+            "label": "Random number generator",
+            "name": "randomNumber",
+            "description": "Generates a random integer"
+        },
+        {
+            "label": "Ping",
+            "name": "ping",
+            "description": "The service returns the sent value for the Pong event",
+            "callbacks": [
+                {
+                    "name": "pong",
+                    "maxWaitingTime": 60000,
+                    "maxExpectedResponses": 1
+                }
+            ]
+        },
+        {
+            "label": "Route Message",
+            "name": "routeMessage",
+            "description": "The service returns the sent value for one of the multiple callback events",
+            "callbacks": [
+                {
+                    "name": "route1",
+                    "maxWaitingTime": 60000,
+                    "maxExpectedResponses": 1
+                },
+                {
+                    "name": "route2",
+                    "maxWaitingTime": 60000,
+                    "maxExpectedResponses": 1
+                },
+                {
+                    "name": "route3",
+                    "maxWaitingTime": 60000,
+                    "maxExpectedResponses": 1
+                },
+                {
+                    "name": "route4",
+                    "maxWaitingTime": 60000,
+                    "maxExpectedResponses": 1
+                }
+            ]
+        },
+        {
+            "label": "Show Information",
+            "name": "showInformation",
+            "callbacks": [
+                {
+                    "name": "requestInformation",
+                    "maxExpectedResponses": 1
+                }
+            ]
+        },
+        {
+            "label": "Shows the current weather for the city",
+            "name": "weather",
+            "description": "Finds and shows the current weather for the requested city. The openweathermap.org API is used to provide this service."
+        },
+        {
+            "label": "Execute Script",
+            "name": "executeScript",
+            "description": "Executes the script configured on the endpoint with the given parameters."
+        },
+        {
+            "label": "Error",
+            "name": "error",
+            "description": "Always throws an exception after to try to execute a method that throws a generic exception."
+        },
+        {
+            "label": "Recoverable error",
+            "name": "recoverableError",
+            "description": "Always throws an exception after to try to execute a method that throws a recoverable exception."
+        },
+        {
+            "label": "Irrecoverable error",
+            "name": "irrecoverableError",
+            "description": "Always throws an exception after to try to execute a method that throws an irrecoverable exception."
+        }
+    ],
+    "configuration":[
+        {
+            "name": "token",
+            "label": "Token",
+            "description": "Sample token used on endpoint",
+            "type": "text",
+            "required": true
+        },
+        {
+            "name": "webhook",
+            "label": "Web Services URL",
+            "type": "label",
+            "value": "@config.WEBHOOK_URL"
+        },
+        {
+            "name": "actionScript",
+            "label": "Script",
+            "type": "script",
+            "required": false
+        }
+    ]
+}
