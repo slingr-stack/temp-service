@@ -1,9 +1,10 @@
 package io.slingr.services.sample.services;
 
-import io.slingr.endpoints.exceptions.EndpointException;
-import io.slingr.endpoints.exceptions.ErrorCode;
-import io.slingr.endpoints.services.rest.RestClient;
-import io.slingr.endpoints.utils.Json;
+
+import io.slingr.services.exceptions.ErrorCode;
+import io.slingr.services.exceptions.ServiceException;
+import io.slingr.services.services.rest.RestClient;
+import io.slingr.services.utils.Json;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +21,7 @@ public class WeatherService extends RestClient {
 
     private static final String API_URI = "http://api.openweathermap.org/data/2.5/";
 
-    public WeatherService() throws EndpointException {
+    public WeatherService() throws ServiceException {
         super(API_URI);
         setupDefaultParam("units", "metric");
         setupDefaultParam("APPID", "3d8a556f9df436cc4eca00d7c19b1321");
@@ -52,7 +53,7 @@ public class WeatherService extends RestClient {
                 final Json restResponse = get(resource);
 
                 if (StringUtils.isNotBlank(restResponse.string("cod")) && StringUtils.isNotBlank(restResponse.string("message"))) {
-                    throw EndpointException.permanent(ErrorCode.API, String.format("%s (%s)", restResponse.string("message"), restResponse.string("cod")));
+                    throw ServiceException.permanent(ErrorCode.API, String.format("%s (%s)", restResponse.string("message"), restResponse.string("cod")));
                 }
 
                 data.set("city", restResponse.string("name"));
@@ -69,7 +70,7 @@ public class WeatherService extends RestClient {
                 }
 
                 response = data;
-            } catch (EndpointException ex) {
+            } catch (ServiceException ex) {
                 final int retry = 5-retries;
                 logger.warn(String.format("Exception when try to get the weather information [%s] %s", ex.toString(), (retry == 0 ? "" : String.format("retry [%s]", retry))));
                 retries--;
@@ -83,7 +84,7 @@ public class WeatherService extends RestClient {
                     }
                 }
             } catch (Exception ex) {
-                final Json rex = EndpointException.json(ErrorCode.API, ex.getMessage(), ex);
+                final Json rex = ServiceException.json(ErrorCode.API, ex.getMessage(), ex);
                 logger.warn(String.format("Exception when try to get the weather information [%s]", rex.toString()));
                 response = rex;
             }

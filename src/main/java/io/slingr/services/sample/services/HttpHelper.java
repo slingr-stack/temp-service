@@ -1,7 +1,8 @@
 package io.slingr.services.sample.services;
 
-import io.slingr.endpoints.utils.FilesUtils;
-import io.slingr.endpoints.utils.Json;
+
+import io.slingr.services.utils.FilesUtils;
+import io.slingr.services.utils.Json;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.InputStream;
